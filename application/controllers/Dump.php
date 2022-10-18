@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Dump extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,16 +20,20 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		//$this->load->view('welcome_message');
-		$this->load->view('login');
-	}
-	public function home(){
-		$usr=$this->session->userdata('user_data');
-		if(isset($usr)){
-			$data["session"]=$usr;
-			$this->load->view('home',$data);
+		$input=file_get_contents("php://input");
+		$data=json_decode(strtolower($input));
+		if(json_last_error == JSON_ERROR_NONE){
+			$sid=$data->sid;
+			$this->db->update("t_states",$data,"sid='$sid'");
+			if($this->db->affected_rows()>0)	{
+				$ret="OK";
+			}else{
+				$ret="NoUpdate";
+			}
 		}else{
-			redirect(base_url()."sign/out/1");
+			$ret=json_last_error_msg();
 		}
+		echo $ret;
 	}
+	
 }
