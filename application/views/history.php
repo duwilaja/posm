@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $bu=base_url()."adminlte310";
 
-$data["title"]="Current State";
-$data["menu"]="curstate";
+$data["title"]="History";
+$data["menu"]="history";
 $data["pmenu"]="reports";
 $data["session"]=$session;
 $data["bu"]=$bu;
@@ -26,7 +26,7 @@ $this->load->view("_sidebar",$data);
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">Reports</li>
-              <li class="breadcrumb-item active">Current State</li>
+              <li class="breadcrumb-item active">History</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -37,9 +37,9 @@ $this->load->view("_sidebar",$data);
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-		<div class="card hidden"><div class="card-body">
+		<div class="card"><div class="card-body">
 			<div class="row">
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-4 hidden">
 				<label for="" class="col-form-label">Client</label>
 				<select class="form-control form-control-sm select2" id="clnt" placeholder="...">
 				</select>
@@ -185,8 +185,9 @@ $(document).ready(function(){
 			url: bu+'r/datatable',
 			data: function (d) {
 				//d.s= '<?php echo base64_encode($sql); ?>',
-				d.t= '<?php echo base64_encode("v_curstate"); ?>',
-				//d.w= getW(),
+				d.t= '<?php echo base64_encode("v_history"); ?>',
+				d.df= $("#df").val(),
+				d.dt= $("#dt").val(),
 				d.r= '<?php echo base64_encode($data["menu"]); ?>';
 			}
 		},
@@ -195,14 +196,14 @@ $(document).ready(function(){
 			mytbl.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 		}
 	});
-	//initDatePicker(["#dari","#sampai"]);
+	initDatePicker(["#dari","#sampai"]);
 	//getCombo("md/gets",'<?php echo base64_encode($ct)?>','<?php echo base64_encode($cc)?>','<?php echo base64_encode($cw)?>','#clnt','','--- All ---');
 })
 
 function reloadTable(frm=''){
 	mytbl.ajax.reload();
 	
-	setTimeout(reloadTable,60*1000);
+	//setTimeout(reloadTable,60*1000);
 }
 </script>
 </body>

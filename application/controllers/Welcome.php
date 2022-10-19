@@ -32,4 +32,25 @@ class Welcome extends CI_Controller {
 			redirect(base_url()."sign/out/1");
 		}
 	}
+	public function tot(){
+		$bts=$this->db->from("t_bts")->count_all_results();
+		$con=$this->db->from("t_states")->count_all_results();
+		$on=$this->db->where(array("pln"=>"on","pwr"=>"on"))->from("t_states")->count_all_results();
+		$data=array(
+			"bts"=>$bts,
+			"controller"=>$con,
+			"on"=>$on,
+			"off"=>($con-$on)
+		);
+		
+		echo json_encode($data);
+	}
+	public function map(){
+		$data=array();
+		$usr=$this->session->userdata('user_data');
+		if(isset($usr)){
+			$data=$this->db->get("v_maps")->result_array();
+		}
+		echo json_encode($data);
+	}
 }

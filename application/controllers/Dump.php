@@ -24,11 +24,13 @@ class Dump extends CI_Controller {
 		$data=json_decode(strtolower($input));
 		if(json_last_error == JSON_ERROR_NONE){
 			$sid=$data->sid;
+			$data->lastupd=date('Y-m-d H:i:s');
 			$this->db->update("t_states",$data,"sid='$sid'");
 			if($this->db->affected_rows()>0)	{
 				$ret="OK";
 			}else{
-				$ret="NoUpdate";
+				$this->db->insert("t_states",$data);
+				$ret="Inserted";
 			}
 		}else{
 			$ret=json_last_error_msg();
