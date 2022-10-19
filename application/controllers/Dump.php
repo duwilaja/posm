@@ -22,7 +22,7 @@ class Dump extends CI_Controller {
 	{
 		$input=file_get_contents("php://input");
 		$data=json_decode(strtolower($input));
-		if(json_last_error == JSON_ERROR_NONE){
+		if(json_last_error() == JSON_ERROR_NONE && $input!=""){
 			$sid=$data->sid;
 			$data->lastupd=date('Y-m-d H:i:s');
 			$this->db->update("t_states",$data,"sid='$sid'");
@@ -33,7 +33,8 @@ class Dump extends CI_Controller {
 				$ret="Inserted";
 			}
 		}else{
-			$ret=json_last_error_msg();
+			if(json_last_error() == JSON_ERROR_NONE) {$ret="Blank";} else{
+			$ret=json_last_error_msg();}
 		}
 		echo $ret;
 	}
