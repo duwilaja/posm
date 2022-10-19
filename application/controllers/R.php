@@ -19,13 +19,14 @@ class R extends CI_Controller {
 		$usr=$this->session->userdata('user_data');
 		$data=array();
 		if(isset($usr)){
-			$res=$this->db->select("btsid,btsname,controllerid,pln,pwr,d,t,batt,t_states.lastupd")->join("t_states","controllerid=sid","left")->get("t_bts")->result_array();
+			$tbl=base64_decode($this->input->post("t"));
+			$df=$this->input->post("df");
+			$dt=$this->input->post("dt");
+			if($df!='') $this->db->where("lastupd>=","$df");
+			if($dt!='') $this->db->where("lastupd<=","$dt 23:59:59");
+			$res=$this->db->get($tbl)->result_array();
 			for($i=0;$i<count($res);$i++){
-				//switch($rpt){
-				//	case "rmp": $res[$i]=$this->rmp($res[$i]); break;
-				//}
-				//$dum=array_values($res[$i]);
-				$data[]=array_values($res[$i]);//$dum;
+				$data[]=array_values($res[$i]);
 			}
 		}
 		$out=array('data'=>$data);
