@@ -122,7 +122,7 @@ $this->load->view("_sidebar",$data);
 				  <input type="text" name="lng" class="form-control form-control-sm" id="lng" placeholder="Longitude">
 				</div>
 				<div class="col-sm-2 input-group">
-				  <button type="button" class="btn btn-sm btn-info" onclick="mappicker('#lat','#lng');"><i class="fas fa-map"></i></button>
+				  <button type="button" title="Show Map" class="btn btn-sm btn-info" onclick="mappicker('#lat','#lng');"><i class="fas fa-map-marked-alt"></i></button>
 				</div>
 			  </div>
 			</div>
