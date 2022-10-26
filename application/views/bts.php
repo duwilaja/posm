@@ -10,7 +10,7 @@ $data["session"]=$session;
 $data["bu"]=$bu;
 
 $sql="select btsid,btsname,controllerid,lat,lng,rowid from t_bts";
-$c="btsid,btsname,controllerid,lat,lng";
+$c="btsid,btsname,controllerid,lat,lng,pic,phone,mail,btsaddr";
 $t="t_bts";
 
 $this->load->view("_head",$data);
@@ -94,35 +94,59 @@ $this->load->view("_sidebar",$data);
 		  
 			<div class="card-body">
 			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">BTS ID</label>
-				<div class="col-sm-8 input-group">
+				<label for="" class="col-sm-2 col-form-label">BTS ID</label>
+				<div class="col-sm-4 input-group">
 				  <input type="text" name="btsid" class="form-control form-control-sm" id="btsid" placeholder="...">
 				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">BTS Name</label>
-				<div class="col-sm-8 input-group">
+			  <!--/div>
+			  <div class="form-group row"-->
+				<label for="" class="col-sm-2 col-form-label">BTS Name</label>
+				<div class="col-sm-4 input-group">
 				  <input type="text" name="btsname" class="form-control form-control-sm" id="btsname" placeholder="...">
 				</div>
 			  </div>
 			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">Controller SID</label>
-				<div class="col-sm-8 input-group">
+				<label for="" class="col-sm-2 col-form-label">Address</label>
+				<div class="col-sm-10 input-group">
+				  <input type="text" name="btsaddr" class="form-control form-control-sm" id="btsaddr" placeholder="...">
+				</div>
+			  </div>
+			  <div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label">Controller SID</label>
+				<div class="col-sm-4 input-group">
 				  <!--input type="text" name="grpname" class="form-control form-control-sm" id="grpname" placeholder="..."-->
 				  <select name="controllerid" class="form-control form-control-sm select2" id="controllerid" placeholder="..." onchange="">
 				  </select>
 				</div>
+			  <!--/div>
+			  <div class="form-group row"-->
+				<label for="" class="col-sm-2 col-form-label">PIC</label>
+				<div class="col-sm-4 input-group">
+				  <input type="text" name="pic" class="form-control form-control-sm" id="pic" placeholder="...">
+				</div>
 			  </div>
 			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">Coordinate</label>
-				<div class="col-sm-3 input-group">
+				<label for="" class="col-sm-2 col-form-label">Phone</label>
+				<div class="col-sm-4 input-group">
+				  <input type="text" name="phone" class="form-control form-control-sm" id="phone" placeholder="...">
+				</div>
+			  <!--/div>
+			  <div class="form-group row"-->
+				<label for="" class="col-sm-2 col-form-label">Mail</label>
+				<div class="col-sm-4 input-group">
+				  <input type="text" name="mail" class="form-control form-control-sm" id="mail" placeholder="...">
+				</div>
+			  </div>
+			  <div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label">Coordinate</label>
+				<div class="col-sm-4 input-group">
 				  <input type="text" name="lat" class="form-control form-control-sm" id="lat" placeholder="Latitude">
 				</div>
-				<div class="col-sm-3 input-group">
+				<div class="col-sm-4 input-group">
 				  <input type="text" name="lng" class="form-control form-control-sm" id="lng" placeholder="Longitude">
 				</div>
 				<div class="col-sm-2 input-group">
-				  <button type="button" class="btn btn-sm btn-info" onclick="mappicker('#lat','#lng');"><i class="fas fa-map"></i></button>
+				  <button type="button" title="Show Map" class="btn btn-sm btn-info" onclick="mappicker('#lat','#lng');"><i class="fas fa-map-marked-alt"></i></button>
 				</div>
 			  </div>
 			</div>
