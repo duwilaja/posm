@@ -1,0 +1,48 @@
+{
+    "name": "eloquent/phony-phpunit",
+    "description": "Phony for PHPUnit.",
+    "keywords": ["mock", "mocking", "stub", "stubbing", "spy", "dummy", "double", "test", "fake"],
+    "homepage": "http://eloquent-software.com/phony/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Erin Millard",
+            "email": "ezzatron@gmail.com",
+            "homepage": "http://ezzatron.com/"
+        }
+    ],
+    "require": {
+        "php": "^7.3 || ^8",
+        "eloquent/phony": "^5",
+        "phpunit/phpunit": "^9"
+    },
+    "require-dev": {
+        "eloquent/code-style": "^1",
+        "eloquent/phpstan-phony": "^0.7",
+        "errors/exceptions": "^0.2",
+        "friendsofphp/php-cs-fixer": "^2",
+        "phpstan/extension-installer": "^1",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-phpunit": "^0.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eloquent\\Phony\\Phpunit\\": "src"
+        },
+        "files": [
+            "src/initialize.php",
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": ["test/integration", "test/suite"],
+        "psr-4": {
+            "Eloquent\\Phony\\Phpunit\\": ["test/src"]
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "7.2.x-dev"
+        }
+    }
+}
