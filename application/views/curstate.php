@@ -195,6 +195,7 @@ $(document).ready(function(){
 			mytbl.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 		}
 	});
+	setTimeout(reloadTable,60*1000);
 	//initDatePicker(["#dari","#sampai"]);
 	//getCombo("md/gets",'<?php echo base64_encode($ct)?>','<?php echo base64_encode($cc)?>','<?php echo base64_encode($cw)?>','#clnt','','--- All ---');
 })
