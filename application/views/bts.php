@@ -211,8 +211,8 @@ $(document).ready(function(){
 		  uaccess: {
 			required: true
 		  },
-		  umail: {
-			  required: true,
+		  mail: {
+			  required: false,
 			  email: true
 		  }
 		}
