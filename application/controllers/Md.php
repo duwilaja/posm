@@ -195,5 +195,5 @@ class Md extends CI_Controller {
 		$ret=array('msgs'=>$msgs,'type'=>$typ);
 		echo json_encode($ret);
 	}
-
+ 
 }

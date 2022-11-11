@@ -199,6 +199,7 @@ function formLoaded(frm,modal,overlay,data=""){
 function delf(file){
 	sendData('#myf',bu+'md/dlf',{f:file});
 }
+
 </script>
 </body>
 </html>
