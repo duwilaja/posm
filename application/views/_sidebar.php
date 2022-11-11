@@ -170,7 +170,7 @@ $bux=base_url();
               </li>
             </ul>
           </li>
-		<?php if($session["uaccess"]=='ADM' and false){?>
+		<?php if($session["uaccess"]=='ADM'){?>
 		  <li class="nav-item setting">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
@@ -181,9 +181,9 @@ $bux=base_url();
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo $bux?>md/?p=usergrps" class="nav-link usergrps">
+                <a href="<?php echo $bux?>md/?p=config" class="nav-link config">
                   <i class="fas fa-angle-right nav-icon"></i>
-                  <p>User Group</p>
+                  <p>Config</p>
                 </a>
               </li>
 			  <!--li class="nav-item">

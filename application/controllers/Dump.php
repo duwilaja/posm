@@ -28,6 +28,7 @@ class Dump extends CI_Controller {
 		$data=json_decode(strtolower($input));
 		if(json_last_error() == JSON_ERROR_NONE && $input!=""){
 			$sid=$data->sid;
+			date_default_timezone_set('Asia/Jakarta');
 			$data->lastupd=date('Y-m-d H:i:s');
 			$this->db->update("t_states",$data,"sid='$sid'");
 			if($this->db->affected_rows()>0)	{
