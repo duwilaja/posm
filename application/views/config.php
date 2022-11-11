@@ -53,6 +53,7 @@ $this->load->view("_sidebar",$data);
                   <thead>
 					  <tr>
 						<th>File</th>
+						<th>URL</th>
 						<th>Action</th>
 					  </tr>
                   </thead>
