@@ -143,7 +143,8 @@ class Md extends CI_Controller {
 		$data=array();
 		foreach($map as $d){
 			$btn='<a title="Delete this file" href="#" onclick="delf(\''.base64_encode($d).'\');"><i class="fas fa-trash"></i></a>';
-			$data[]=array($d,$btn);
+			$lnk=base_url("files/").$d;
+			$data[]=array($d,$lnk,$btn);
 		}
 		$ret=array('data'=>$data);
 		echo json_encode($ret);
