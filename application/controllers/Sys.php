@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Md extends CI_Controller {
+class Sys extends CI_Controller {
 
 	public function index()
 	{
@@ -9,7 +9,7 @@ class Md extends CI_Controller {
 		if(isset($usr)){
 			$view=$this->input->get("p");
 			$data["session"]=$usr;
-			if($usr["uaccess"]!='ADM') $view='unauthorize';
+			if($usr["uaccess"]!='SYS') $view='unauthorize';
 			$this->load->view($view,$data);
 		}else{
 			redirect(base_url()."sign/out/1");
@@ -135,5 +135,66 @@ class Md extends CI_Controller {
 		$ret=array('msgs'=>$msgs,'type'=>$typ);
 		echo json_encode($ret);
 	}
-	 
+	
+	//files
+	public function filetable(){
+		$this->load->helper('directory');
+		$map = directory_map("./files/",1);
+		$data=array();
+		foreach($map as $d){
+			$btn='<a title="Delete this file" href="#" onclick="delf(\''.base64_encode($d).'\');"><i class="fas fa-trash"></i></a>';
+			$lnk=base_url("files/").$d;
+			$data[]=array($d,$lnk,$btn);
+		}
+		$ret=array('data'=>$data);
+		echo json_encode($ret);
+	}
+	public function svf()
+	{
+		$usr=$this->session->userdata('user_data');
+		$data=array();$msgs='Failed'; $typ="error";
+		if(isset($usr)){
+			$config['upload_path']          = './files/';
+			$config['allowed_types']        = '*';
+			//$config['max_size']             = 100;
+			//$config['max_width']            = 1024;
+			//$config['max_height']           = 768;
+			$config['file_ext_tolower'] = true;
+			$config['overwrite'] = true;
+			
+
+			$this->load->library('upload', $config);
+
+			if ( ! $this->upload->do_upload('file'))
+			{
+				$msgs = $this->upload->display_errors('','');
+			}
+			else
+			{
+				$msgs = "File uploaded.";
+				$typ="success";
+			}
+		}else{
+			$msgs="Session closed, please login";
+		}
+		$ret=array('msgs'=>$msgs,'type'=>$typ);
+		echo json_encode($ret);
+	}
+	
+	public function dlf(){
+		$usr=$this->session->userdata('user_data');
+		$data=array();$msgs='Failed'; $typ="error";
+		if(isset($usr)){
+			$f=base64_decode($this->input->post("f"));
+			if(unlink('./files/'.$f)){
+				$msgs='File '.$f.' deleted';
+				$typ='success';
+			}
+		}else{
+			$msgs="Session closed, please login";
+		}
+		$ret=array('msgs'=>$msgs,'type'=>$typ);
+		echo json_encode($ret);
+	}
+ 
 }

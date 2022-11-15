@@ -140,7 +140,7 @@ $(document).ready(function(){
 		processing: true,
 		ajax: {
 			type: 'POST',
-			url: bu+'md/filetable',
+			url: bu+'sys/filetable',
 			data: function (d) {
 				d.s= '<?php echo base64_encode($sql); ?>';
 			}
@@ -198,7 +198,7 @@ function formLoaded(frm,modal,overlay,data=""){
 	if($("#rowid").val()!="0") $("#btnsave").hide();
 }
 function delf(file){
-	sendData('#myf',bu+'md/dlf',{f:file});
+	sendData('#myf',bu+'sys/dlf',{f:file});
 }
 
 </script>
