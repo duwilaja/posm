@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $bu=base_url()."adminlte310";
 
-$data["title"]="Config";
+$data["title"]="OTA Config";
 $data["menu"]="config";
 $data["pmenu"]="setting";
 $data["session"]=$session;
@@ -142,7 +142,8 @@ $(document).ready(function(){
 			type: 'POST',
 			url: bu+'sys/filetable',
 			data: function (d) {
-				d.s= '<?php echo base64_encode($sql); ?>';
+				d.d= '<?php echo base64_encode("./files/"); ?>',
+				d.l= '<?php echo base64_encode("files/"); ?>';
 			}
 		}
 	});
@@ -190,15 +191,15 @@ function openf(id=0){
 function savef(del=false){
 	$("#flag").val('SAVE');
 	if(del) $("#flag").val('DEL');
-	saveForm('#myf','md/svf','#ovl',del,'#modal-frm');
+	saveForm('#myf','sys/svf','#ovl',del,'#modal-frm');
 }
 
 function formLoaded(frm,modal,overlay,data=""){
 	//$("#grpname").trigger("change");
 	if($("#rowid").val()!="0") $("#btnsave").hide();
 }
-function delf(file){
-	sendData('#myf',bu+'sys/dlf',{f:file});
+function delf(dir,file){
+	sendData('#myf',bu+'sys/dlf',{d:dir,f:file});
 }
 
 </script>

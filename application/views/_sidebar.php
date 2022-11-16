@@ -175,7 +175,7 @@ $bux=base_url();
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
               <p>
-                Settings
+                Engeneering
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -186,13 +186,13 @@ $bux=base_url();
                   <p>Config</p>
                 </a>
               </li>
-			  <!--li class="nav-item">
-                <a href="#" class="nav-link">
+			  <li class="nav-item">
+                <a href="<?php echo $bux?>sys/?p=result" class="nav-link result">
                   <i class="fas fa-angle-right nav-icon"></i>
-                  <p>Workflow</p>
+                  <p>Result</p>
                 </a>
               </li>
-			  <li class="nav-item">
+			  <!--li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="fas fa-angle-right nav-icon"></i>
                   <p>Notification</p>

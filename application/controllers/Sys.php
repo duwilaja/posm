@@ -138,12 +138,14 @@ class Sys extends CI_Controller {
 	
 	//files
 	public function filetable(){
+		$dir=base64_decode($this->input->post("d"));
 		$this->load->helper('directory');
-		$map = directory_map("./files/",1);
+		$map = directory_map($dir,1);
 		$data=array();
 		foreach($map as $d){
-			$btn='<a title="Delete this file" href="#" onclick="delf(\''.base64_encode($d).'\');"><i class="fas fa-trash"></i></a>';
-			$lnk=base_url("files/").$d;
+			$btn='<a title="Delete this file" href="#" onclick="delf(\''.base64_encode($dir).'\',\''.base64_encode($d).'\');"><i class="fas fa-trash"></i></a>';
+			$lnk=base_url(substr($dir,2)).$d;
+			$btn.='&nbsp;&nbsp;<a title="view" href="javascript:;" data-fancybox data-type="iframe" data-src="'.$lnk.'"><i class="fas fa-search"></i></a>';
 			$data[]=array($d,$lnk,$btn);
 		}
 		$ret=array('data'=>$data);
@@ -186,7 +188,8 @@ class Sys extends CI_Controller {
 		$data=array();$msgs='Failed'; $typ="error";
 		if(isset($usr)){
 			$f=base64_decode($this->input->post("f"));
-			if(unlink('./files/'.$f)){
+			$d=base64_decode($this->input->post("d"));
+			if(unlink($d.$f)){
 				$msgs='File '.$f.' deleted';
 				$typ='success';
 			}
@@ -195,6 +198,16 @@ class Sys extends CI_Controller {
 		}
 		$ret=array('msgs'=>$msgs,'type'=>$typ);
 		echo json_encode($ret);
+	}
+	
+	public function dump(){
+		$input=file_get_contents("php://input");
+		$fname='./dumps/'.date('Y-m-d_H_i_s').'.txt';
+		if(file_put_contents($fname,$input)){
+			echo "OK";
+		}else{
+			echo "NOK";
+		}
 	}
  
 }

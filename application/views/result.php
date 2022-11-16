@@ -3,15 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $bu=base_url()."adminlte310";
 
-$data["title"]="Users";
-$data["menu"]="users";
-$data["pmenu"]="";
+$data["title"]="Result Dump";
+$data["menu"]="result";
+$data["pmenu"]="setting";
 $data["session"]=$session;
 $data["bu"]=$bu;
 
-$sql="select uid,uname,umail,uaccess,ugrp,rowid from t_users where uaccess<>'SYS'";
-$c="uid,uname,ugrp,umail,uaccess";
-$t="t_users";
+$sql="./files/";//"select sid,rowid from t_states";
+$c="sid";
+$t="t_states";
 
 $this->load->view("_head",$data);
 $this->load->view("_navbar",$data);
@@ -29,8 +29,8 @@ $this->load->view("_sidebar",$data);
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#"></a></li>
-              <li class="breadcrumb-item active"></li>
+              <li class="breadcrumb-item">Master Data</li>
+              <li class="breadcrumb-item active">Controller</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -45,18 +45,16 @@ $this->load->view("_sidebar",$data);
 			<div class="card-header">
 				<div class="card-tools">
 					<button class="btn btn-success btn-sm" onclick="reloadTable()"><i class="fas fa-sync"></i></button>
-					<button class="btn btn-primary btn-sm" onclick="openf()"><i class="fas fa-plus"></i></button>
+					<!--button class="btn btn-primary btn-sm" onclick="openf()"><i class="fas fa-plus"></i></button-->
 				</div>
 			</div>
 			<div class="card-body table-responsive">
                 <table id="example1" class="table table-sm table-bordered table-striped">
                   <thead>
 					  <tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Access</th>
-						<!--th>Group</th-->
+						<th>File</th>
+						<th>URL</th>
+						<th>Action</th>
 					  </tr>
                   </thead>
                   <tbody>
@@ -94,45 +92,17 @@ $this->load->view("_sidebar",$data);
 		  
 			<div class="card-body">
 			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">ID</label>
+				<label for="" class="col-sm-4 col-form-label">File</label>
 				<div class="col-sm-8 input-group">
-				  <input type="text" name="uid" class="form-control form-control-sm" id="uid" placeholder="...">
-				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">Name</label>
-				<div class="col-sm-8 input-group">
-				  <input type="text" name="uname" class="form-control form-control-sm" id="uname" placeholder="...">
+				  <input type="file" name="file" class="form-control form-control-sm" id="file" placeholder="...">
 				</div>
 			  </div>
 			  <div class="form-group row hidden">
-				<label for="" class="col-sm-4 col-form-label">Group</label>
+				<label for="" class="col-sm-4 col-form-label">Client</label>
 				<div class="col-sm-8 input-group">
-				  <!--input type="text" name="ugrp" class="form-control form-control-sm" id="ugrp" placeholder="..."-->
-				  <select name="ugrp" class="form-control form-control-sm" id="ugrp" placeholder="...">
+				  <!--input type="text" name="grpname" class="form-control form-control-sm" id="grpname" placeholder="..."-->
+				  <select name="grpname" class="form-control form-control-sm select2" id="grpname" placeholder="..." onchange="">
 				  </select>
-				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">Email</label>
-				<div class="col-sm-8 input-group">
-				  <input type="text" name="umail" class="form-control form-control-sm" id="umail" placeholder="...">
-				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">Access</label>
-				<div class="col-sm-8 input-group">
-				  <select name="uaccess" class="form-control form-control-sm" id="uaccess" placeholder="...">
-					<option value=""></option>
-					<option value="ADM">Admin</option>
-					<option value="USR">User</option>
-				  </select>
-				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="" class="col-sm-4 col-form-label">Set Password</label>
-				<div class="col-sm-8 input-group">
-				  <input type="password" name="upwd" class="form-control form-control-sm" id="upwdx" placeholder="...">
 				</div>
 			  </div>
 			</div>
@@ -144,7 +114,7 @@ $this->load->view("_sidebar",$data);
 		</div>
 		<div class="modal-footer pull-right">
 		  <button type="button" id="btndel" class="btn btn-danger" onclick="savef(true)">Delete</button>
-		  <button type="button" class="btn btn-primary" onclick="savef();">Save</button>
+		  <button type="button" id="btnsave" class="btn btn-primary" onclick="savef();">Upload</button>
 		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		</div>
 	  </div>
@@ -156,9 +126,10 @@ $this->load->view("_sidebar",$data);
   
 <?php
 $this->load->view("_foot",$data);
-$cc="distinct grpid as v,grpid as t";
-$ct="t_usergrp";
-$cw="1=1";
+
+$cc="clientid as v,clientname as t";
+$ct="t_clients";
+$cw="1=1 order by clientname";
 ?>
 <script>
 var  mytbl;
@@ -167,22 +138,18 @@ $(document).ready(function(){
 	mytbl = $("#example1").DataTable({
 		serverSide: false,
 		processing: true,
-		buttons: ["copy", "excel"],
 		ajax: {
 			type: 'POST',
-			url: bu+'md/datatable',
+			url: bu+'sys/filetable',
 			data: function (d) {
-				d.s= '<?php echo base64_encode($sql); ?>';
+				d.d= '<?php echo base64_encode("./dumps/"); ?>',
+				d.l= '<?php echo base64_encode("dumps/"); ?>';
 			}
-		},
-		initComplete: function(){
-			//filterDatatable(mytbl,[1,2]);
-			mytbl.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 		}
 	});
 	$("#myf").validate({
 		rules: {
-		  uid: {
+		  sid: {
 			required: true
 		  },
 		  upwd: {
@@ -192,15 +159,11 @@ $(document).ready(function(){
 					return false;
 				}
 		  },
-		  uname: {
+		  grpname: {
 			required: true
 		  },
 		  ugrp: {
-			required: function(element){
-					//if($("#uaccess").val()=="USR") return true;
-					
-					return false;
-				}
+			required: true
 		  },
 		  uaccess: {
 			required: true
@@ -210,9 +173,10 @@ $(document).ready(function(){
 			  email: true
 		  }
 		}
-	});
+	})
 	
-	//getCombo("md/gets",'<?php echo base64_encode($ct)?>','<?php echo base64_encode($cc)?>','<?php echo base64_encode($cw)?>','#ugrp');
+	//getCombo("md/gets",'<?php echo base64_encode($ct)?>','<?php echo base64_encode($cc)?>','<?php echo base64_encode($cw)?>','#grpname');
+	
 });
 
 function reloadTable(frm){
@@ -221,13 +185,23 @@ function reloadTable(frm){
 
 function openf(id=0){
 	$("#rowid").val(id);
+	$("#btnsave").show();
 	openForm('#myf','#modal-frm','md/get','#ovl',id,'<?php echo base64_encode($t)?>','<?php echo base64_encode($c)?>')
 }
 function savef(del=false){
 	$("#flag").val('SAVE');
 	if(del) $("#flag").val('DEL');
-	saveForm('#myf','md/sv','#ovl',del,'#modal-frm');
+	saveForm('#myf','sys/svf','#ovl',del,'#modal-frm');
 }
+
+function formLoaded(frm,modal,overlay,data=""){
+	//$("#grpname").trigger("change");
+	if($("#rowid").val()!="0") $("#btnsave").hide();
+}
+function delf(dir,file){
+	sendData('#myf',bu+'sys/dlf',{d:dir,f:file});
+}
+
 </script>
 </body>
 </html>
