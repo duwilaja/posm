@@ -9,7 +9,7 @@ $data["pmenu"]="master";
 $data["session"]=$session;
 $data["bu"]=$bu;
 
-$sql="select btsid,btsname,controllerid,rowid from t_bts";
+$sql="select btsid,btsname,btsaddr,controllerid,rowid from t_outlets";
 $c="btsid,btsname,controllerid,pic,phone,mail,btsaddr";
 $t="t_outlets";
 

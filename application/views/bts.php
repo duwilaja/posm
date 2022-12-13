@@ -134,7 +134,7 @@ $this->load->view("_sidebar",$data);
 			  <div class="form-group row"-->
 				<label for="" class="col-sm-2 col-form-label">Mail</label>
 				<div class="col-sm-4 input-group">
-				  <input type="text" name="mail" class="form-control form-control-sm" id="mail" placeholder="...">
+				  <textarea name="mail" class="form-control form-control-sm" id="mail" placeholder="..."></textarea>
 				</div>
 			  </div>
 			  <div class="form-group row">
@@ -213,7 +213,7 @@ $(document).ready(function(){
 		  },
 		  mail: {
 			  required: false,
-			  email: true
+			  multiemail: true
 		  }
 		}
 	})
