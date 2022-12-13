@@ -13,6 +13,20 @@ function document_ready(){
 		  $(element).removeClass('is-invalid');
 		}
 	});
+	$.validator.addMethod(
+		"multiemail",
+		function(value,element){
+			if(value=='') return true;
+			
+			var emails=value.split(";");
+			var ret=true;
+			$.each(emails,function(idx,val){
+				ret=ret && $.validator.methods.email.call($.validator.prototype,$.trim(val),element);
+			});
+			return ret;
+		},
+		$.validator.messages.email
+	);
 	
 	$('#fpwd').validate({
     rules: {
