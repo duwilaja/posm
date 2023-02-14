@@ -202,7 +202,9 @@ class Sys extends CI_Controller {
 	
 	public function dump(){
 		date_default_timezone_set("Asia/Jakarta");
-		$input=file_get_contents("php://input");
+		$input="Contents:".file_get_contents("php://input");
+		$input.="GET:".json_encode($_GET);
+		$input.="POST:".json_encode($_POST);
 		$fname='./dumps/'.date('Y-m-d_H_i_s').'.txt';
 		if(file_put_contents($fname,$input)){
 			echo "OK";
